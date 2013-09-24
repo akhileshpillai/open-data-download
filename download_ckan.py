@@ -1,11 +1,12 @@
-# https://twitter.com/CKANproject/status/378182161330753536
-import ckanapi
-import pprint
 from time import sleep
+import os, json
+
+import ckanapi # https://twitter.com/CKANproject/status/378182161330753536
+import pprint
 
 from portals import ckan
 
-def download(portal, directory):
+def download(portal_url, directory):
     '''
     Args:
         portal: A string for the root of the portal (like "http://demo.ckan.org")
@@ -13,11 +14,24 @@ def download(portal, directory):
     Returns:
         Nothing
     '''
-    portal = ckanapi.RemoteCKAN(portal)
-    datasets = portal.action.package_list()
-    for dataset in datasets:
-        _save_dataset(id)
-        sleep(3)
 
-def _save_dataset(id)
-        portal.action.package_show(id=id)
+    # Make sure the directory exists.
+    try:
+        os.makedirs(directory)
+    except OSError:
+        pass
+
+    portal = ckanapi.RemoteCKAN(portal_url)
+    datasets = portal.action.package_list()
+
+    for dataset in datasets:
+        filename = os.path.join(directory, id)
+        if os.path.exists(filename):
+            print 'Already downloaded %s from %s' % (id, portal_url)
+        else:
+            print 'Downloading %s from %s' % (id, portal_url)
+            dataset_information = portal.action.package_show(id=id)
+            fp = open(filename, 'w')
+            json.dump(dataset_information, fp)
+            fp.close()
+            sleep(3)
