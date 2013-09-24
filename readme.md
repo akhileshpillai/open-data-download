@@ -1,1 +1,1 @@
-Download all the datasets on CKAN.
+Download all the datasets on open data portals.
