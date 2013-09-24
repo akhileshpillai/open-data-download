@@ -7,7 +7,7 @@ import portals
 
 ROOT_DIR = 'portals'
 
-def start():
+def create():
     processes = {}
 
     for portal in portals.ckan:
@@ -16,6 +16,17 @@ def start():
 
     return processes
 
-def killall(processes):
+def start(processes):
+    'Start all of the processes.'
+    for process in processes.values():
+        process.start()
+
+def join(processes):
+    'Wait for all of the processes to end.'
+    for process in processes.values():
+        process.join()
+
+def kill(processes):
+    'Kill all of the processes.'
     for process in processes.values():
         process.terminate()
