@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 import os
-import threading
+from multiprocessing import Process
 
 from download_ckan import download as ckan
 import portals
 
 ROOT_DIR = 'portals'
 
-threads = {}
+def start():
+    processes = {}
 
-for portal in portals.ckan:
-    args = ("http://" + portal, os.path.join(ROOT_DIR, 'ckan', portal))
-    threads[('ckan', portal)] = threading.Thread(target = ckan, args = args)
+    for portal in portals.ckan:
+        args = ("http://" + portal, os.path.join(ROOT_DIR, 'ckan', portal))
+        processes[('ckan', portal)] = Process(target = ckan, args = args)
 
+    return processes
 
-'''
-    thr.start() # will run "foo"
-    thr.is_alive() # will return whether foo is running currently
-    thr.join()
-'''
+def killall(processes):
+    for process in processes.values():
+        process.terminate()
