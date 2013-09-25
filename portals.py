@@ -60,7 +60,8 @@ socrata = [
     'data.acgov.org',
     'data.medicare.gov',
 ]
-junar = [
+
+junar = filter(lambda p: '.opendata.junar.com' in p, [
     'datos.gob.cl',
     'lima.datosabiertos.pe',
     'bahiablanca.opendata.junar.com',
@@ -76,11 +77,8 @@ junar = [
     # https://twitter.com/javierpajaro/status/363333894931628034
     'www.opendatalatinoamerica.org',
     'data.lanacion.com.ar',
-    'infodatos.opendata.junar.com'
-]
-# .filter(function(portal) {
-#   return portal.match('.opendata.junar.com')
-# })
+    'infodatos.opendata.junar.com',
+])
 
 ckan = [
     'datahub.io',
@@ -144,6 +142,7 @@ ckan = [
     'thedatahub.org',
     'dati.toscana.it',
 ]
+
 opendatasoft = [
     'data.iledefrance.fr',
     'opendata.paris.fr.opendatasoft.com',
@@ -154,5 +153,5 @@ opendatasoft = [
     'scisf.opendatasoft.com',
     'pod.opendatasoft.com',
     'dataratp.opendatasoft.com',
-    'public.opendatasoft.com'
+    'public.opendatasoft.com',
 ]
