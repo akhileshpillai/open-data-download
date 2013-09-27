@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 from time import sleep
 import os, json
-from multiprocessing import Process
 
 import ckanapi # https://twitter.com/CKANproject/status/378182161330753536
 

@@ -1,4 +1,8 @@
 #!/usr/bin/env python2
+from multiprocessing import Process
+import os
+
+import portals
 from download_ckan import download as ckan
 # from download_socrata import download as socrata
 from download_opendatasoft import download as opendatasoft
