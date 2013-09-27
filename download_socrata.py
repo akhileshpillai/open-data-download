@@ -43,7 +43,7 @@ def download(portal_url, directory):
             page += 1
 
 def download_view(portal_url, directory, id):
-    url = "http://%s/views/%s.json" % (portal_url, id)
+    url = "http://%s/views/%s.json?app_token=%s" % (portal_url, id, APP_TOKEN)
     filename = os.path.join(directory, portal_url, id)
     if os.path.exists(filename):
         pass # print 'Already downloaded %s from %s' % (dataset, portal_url)
@@ -58,4 +58,5 @@ def parse_search_page(search_base, number):
     return [href.split('/')[-1] for href in hrefs]
 
 if __name__ == '__main__':
-    download(u'data.hawaii.gov', u'portals/socrata')
+    # download(u'data.hawaii.gov', u'portals/socrata')
+    download(u'data.nola.gov', u'portals/socrata')
