@@ -4,7 +4,7 @@ import os
 
 import portals
 from download_ckan import download as ckan
-# from download_socrata import download as socrata
+from download_socrata import download as socrata
 from download_opendatasoft import download as opendatasoft
 
 ROOT_DIR = 'portals'
@@ -47,6 +47,7 @@ def main():
 
     # p = create('ckan', ckan, portals.ckan)
     p = create('opendatasoft', opendatasoft, portals.opendatasoft)
+    p = create('socrata', socrata, portals.socrata)
 
     def signal_handler(signal, frame):
         print 'You pressed Ctrl+C!'
