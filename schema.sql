@@ -3,10 +3,15 @@ CREATE TYPE "software" AS ENUM ('ckan', 'socrata', 'opendatasoft', 'junar', 'bes
 CREATE TABLE "dataset" (
   "uri" text not null,
   "portal_software" software not null,
+  "portal" text not null, -- like data.gov.uk
+  "dataset_id" text not null, -- within the portal
 
   "name" text not null,
   "description" text not null,
   "keywords" text not null,
+
+  "publishing_organization" text not null, -- the department
+  "source_url" text not null, -- site whence the data came, if available
 
   "columns" integer[] not null,
   -- http://www.postgresql.org/docs/9.1/static/arrays.html
