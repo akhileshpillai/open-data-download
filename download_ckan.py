@@ -7,8 +7,6 @@ import ckanapi # https://twitter.com/CKANproject/status/378182161330753536
 
 import portals
 
-ROOT_DIR = 'portals'
-
 def download(portal_url, directory):
     '''
     Args:
@@ -71,46 +69,6 @@ def check_all():
             works, count = check_one(protocol + portal)
             works_str = 'TRUE' if works else 'FALSE'
             print portal + ',' + works_str + ',' + ('NA' if count == None else str(count))
-
-def create():
-    processes = {}
-
-    for portal in portals.ckan:
-        args = ("http://" + portal, os.path.join(ROOT_DIR, 'ckan', portal))
-        processes[('ckan', portal)] = Process(target = download, args = args)
-
-    return processes
-
-def start(processes):
-    'Start all of the processes.'
-    for process in processes.values():
-        process.start()
-
-def join(processes):
-    'Wait for all of the processes to end.'
-    for process in processes.values():
-        process.join()
-
-def kill(processes):
-    'Kill all of the processes.'
-    for process in processes.values():
-        process.terminate()
-
-def main():
-    import signal
-    import sys
-
-    p = create()
-
-    def signal_handler(signal, frame):
-        print 'You pressed Ctrl+C!'
-        kill(p)
-        sys.exit(0)
-
-    signal.signal(signal.SIGINT, signal_handler)
-
-    start(p)
-    join(p)
 
 if __name__ == '__main__':
     check_all()
