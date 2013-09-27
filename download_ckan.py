@@ -65,6 +65,17 @@ def kill(processes):
         process.terminate()
 
 if __name__ == '__main__':
+    import signal
+    import sys
+
     p = create()
+
+    def signal_handler(signal, frame):
+        print 'You pressed Ctrl+C!'
+        kill(p)
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, signal_handler)
+
     start(p)
     join(p)
