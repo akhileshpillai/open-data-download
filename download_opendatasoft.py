@@ -19,7 +19,6 @@ def download(portal_url, directory):
         pass
 
     fn = os.path.join(directory, portal_url)
-    print fn
     try:
         urlretrieve('http://' + portal_url + '/api/datasets/1.0/search?rows=1000000', fn)
     except:
