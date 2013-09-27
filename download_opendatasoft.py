@@ -19,12 +19,13 @@ def download(portal_url, directory):
         pass
 
     fn = os.path.join(directory, portal_url)
-    try:
-        urlretrieve('http://' + portal_url + '/api/datasets/1.0/search?rows=1000000', fn)
-    except:
-        print '**Error downloading %s**' % portal_url
-    else:
-        print '  Downloaded %s' % portal_url
+    if not os.path.exists(fn):
+        try:
+            urlretrieve('http://' + portal_url + '/api/datasets/1.0/search?rows=1000000', fn)
+        except:
+            print '**Error downloading %s**' % portal_url
+        else:
+            print '  Downloaded %s' % portal_url
 
 if __name__ == '__main__':
     download('parisdata.opendatasoft.com', 'portals/opendatasoft')
