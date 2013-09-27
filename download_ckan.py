@@ -65,7 +65,7 @@ def check_one(portal_url):
 def check_all():
 #   p = ['http://' + portal for portal in portals.ckan]
 #   return dict(zip(p, map(check_one, p)))
-    for portal in portals.ckan:
+    for portal in portals.ckan[1:]:
         for protocol in ['http://']:
             works, count = check_one(protocol + portal)
             works_str = 'TRUE' if works else 'FALSE'
