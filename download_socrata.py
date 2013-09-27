@@ -48,8 +48,12 @@ def download_view(portal_url, directory, id):
     if os.path.exists(filename):
         pass # print 'Already downloaded %s from %s' % (dataset, portal_url)
     else:
-        print '  Downloading https://%s/d/%s' % (portal_url, id)
-        urlretrieve(url, filename)
+        try:
+            urlretrieve(url, filename)
+        except:
+            print '**Error at https://%s/d/%s' % (portal_url, id)
+        else:
+            print '  Downloaded https://%s/d/%s' % (portal_url, id)
 
 def parse_search_page(search_base, number):
     'Get 4x4s out of a search page.'
