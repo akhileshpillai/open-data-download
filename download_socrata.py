@@ -5,6 +5,8 @@ from lxml.html import fromstring
 from urllib2 import urlopen
 from urllib import urlretrieve
 
+APP_TOKEN = 'gTddlqVLsV4DkBlXnDSwnTazB'
+
 def download(portal_url, directory):
     '''
     Args:
