@@ -8,21 +8,21 @@ import standardize
 def test_socrata():
     nonstandard = json.load(open(os.path.join('fixtures', 'jx86-2vch')))
     expected = {
-        "uri": "https://data.hawaii.gov/d/jx86-2vch",
-        "portal_software": "socrata",
-        "portal": "data.hawaii.gov",
-        "dataset_id": "jx86-2vch",
+        u"uri": u"https://data.hawaii.gov/d/jx86-2vch",
+        u"portal_software": u"socrata",
+        u"portal": u"data.hawaii.gov",
+        u"dataset_id": u"jx86-2vch",
 
-        "name" : "Libraries State Of Hawaii",
-        "description" : "Listing of the Public Libraries in the State of Hawaii",
-        "keywords": ["library"],
+        u"name" : u"Libraries State Of Hawaii",
+        u"description" : u"Listing of the Public Libraries in the State of Hawaii",
+        u"keywords": ["library"],
 
-        "publishing_organization": "Hawaii State Public Library System",
-        "source_url":  "http://hawaii.sdp.sirsi.net/custom/web/",
-        "license": "Creative Commons Attribution 3.0 Unported",
+        u"publishing_organization": u"Hawaii State Public Library System",
+        u"source_url":  u"http://hawaii.sdp.sirsi.net/custom/web/",
+        u"license": u"Creative Commons Attribution 3.0 Unported",
 
-        "columns": [],
+        u"columns": [u'Library Name', u'County', u'Phone', u'Location 1'],
     }
-    observed = standardize.socrata(nonstandard)
+    observed = standardize.socrata(nonstandard, u'data.hawaii.gov', u'jx86-2vch')
     del observed['raw_metadata']
     nose.tools.assert_dict_equal(observed, expected)

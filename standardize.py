@@ -1,18 +1,21 @@
-def socrata(d):
+def socrata(d, portal, id):
+    if id != d['id']:
+        raise ValueError('The id argument must match the id in the json file.')
+
     return {
-        "uri": "",
-        "portal_software": "socrata",
-        "portal": "",
-        "dataset_id": d['id'],
+        u"uri": u"https://%s/d/%s" % (portal, id),
+        u"portal_software": u"socrata",
+        u"portal": portal,
+        u"dataset_id": d['id'],
 
-        "name" : d['name'],
-        "description" : d['description'],
-        "keywords": d['tags'],
+        u"name" : d['name'],
+        u"description" : d['description'],
+        u"keywords": d['tags'],
 
-        "publishing_organization": d['attribution'],
-        "source_url":  d['attributionLink'],
-        "license": d['license'],
+        u"publishing_organization": d['attribution'],
+        u"source_url":  d['attributionLink'],
+        u"license": d['license']['name'],
 
-        "columns": [col['name'] for col in d['columns']],
-        "raw_metadata": d,
+        u"columns": [col['name'] for col in d['columns']],
+        u"raw_metadata": d,
     }
