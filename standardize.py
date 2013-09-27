@@ -46,7 +46,6 @@ def ckan(d, portal, name):
     if name != d['name']:
         raise ValueError('The name argument must match the name in the json file.')
 
-    print d.keys()
     return {
         u"uri": u"http://%s/dataset/%s" % (portal, name),
         u"portal_software": u"ckan",
@@ -55,12 +54,12 @@ def ckan(d, portal, name):
 
         u"title" : d['title'],
         u"description" : d['notes'],
-        u"keywords": d['tags'],
+        u"keywords": [col['name'] for col in d['tags']],
 
-        u"publishing_organization": '', #d['publisher'],
+        u"publishing_organization": '',
         u"source_url":  d['url'],
         u"license": d['license_title'],
 
-        u"columns": [col['name'] for col in d['tags']],
+        u"columns": [],
         u"raw_metadata": d,
     }

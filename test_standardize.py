@@ -61,7 +61,7 @@ def test_ckan():
         u"uri": u"http://data.gov.uk/dataset/housing-design-quality-2006",
         u"portal_software": u"ckan",
         u"portal": u"data.gov.uk",
-        u"dataset_id": u"",
+        u"dataset_id": u"17f9946d-d243-4a59-b9b8-6d7bd7e6bef2",
 
         u"title" : u'Housing design quality in the East Midlands, West Midlands and South West from CABE 2006',
         u"description" : u'An assessment of the design quality of 100 schemes in the East Midlands, West Midlands and South West. The assessment was carried out in 2006. Assessments were based on the Building for Life criteria. Schemes that were eligible for auditing included those that were larger than 20 units in size; completed between January 2003 and August 2006 (the date of the audit); and built by one of the top 10 housebuilders in the region, based on the number of units completed within the same period. Data on each scheme includes scheme name, location, developer, scores for individual Building for Life criteria and total scores. Six out of the 20 criteria which could not be assessed on site are incomplete, due to the poor response to a survey by developers. \r\n',
