@@ -51,3 +51,6 @@ def test_opendatasoft():
     observed = standardize.opendatasoft(nonstandard, u'dataratp.opendatasoft.com', u'correspondances_stations_lignes_sur_le_reseau_ratp')
     del observed['raw_metadata']
     nose.tools.assert_dict_equal(observed, expected)
+
+def test_opendatasoft_fail():
+    nose.tools.assert_raises(ValueError, lambda: standardize.opendatasoft({'dataset_id': 'one id'}, 'data.gov.uk', 'different id'))

@@ -19,3 +19,9 @@ def socrata(d, portal, id):
         u"columns": [col['name'] for col in d['columns']],
         u"raw_metadata": d,
     }
+
+def opendatasoft(d, portal, id):
+    if id != d['dataset_id']:
+        raise ValueError('The id argument must match the dataset_id in the json file.')
+
+    # return {
