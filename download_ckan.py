@@ -30,14 +30,15 @@ def download(portal_url, directory):
     for dataset in datasets:
         filename = os.path.join(directory, dataset)
         if os.path.exists(filename):
-            print 'Already downloaded %s from %s' % (dataset, portal_url)
+            pass # print 'Already downloaded %s from %s' % (dataset, portal_url)
         else:
-            print 'Downloading %s from %s' % (dataset, portal_url)
+            print '  Downloading %s from %s' % (dataset, portal_url)
             dataset_information = portal.action.package_show(id = dataset)
             fp = open(filename, 'w')
             json.dump(dataset_information, fp)
             fp.close()
             sleep(3)
+    print '**Finished downloading %s**' % portal_url
 
 def create():
     processes = {}
@@ -63,7 +64,7 @@ def kill(processes):
     for process in processes.values():
         process.terminate()
 
-if __main__ == '__main__':
+if __name__ == '__main__':
     p = create()
     start(p)
     join(p)
