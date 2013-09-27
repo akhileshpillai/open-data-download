@@ -27,6 +27,9 @@ def test_socrata():
     del observed['raw_metadata']
     nose.tools.assert_dict_equal(observed, expected)
 
+def test_socrata_fail():
+    nose.tools.assert_raises(ValueError, lambda: standardize.socrata({'id': 'one id'}, 'data.gov.uk', 'different id'))
+
 def test_opendatasoft():
     nonstandard = json.load(open(os.path.join('fixtures', 'dataratp.opendatasoft.com')))['datasets'][0]
     expected = {
@@ -45,5 +48,6 @@ def test_opendatasoft():
 
         u"columns": [],
     }
+    observed = standardize.opendatasoft(nonstandard, u'dataratp.opendatasoft.com', u'correspondances_stations_lignes_sur_le_reseau_ratp')
     del observed['raw_metadata']
     nose.tools.assert_dict_equal(observed, expected)
