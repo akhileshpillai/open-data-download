@@ -54,3 +54,25 @@ def test_opendatasoft():
 
 def test_opendatasoft_fail():
     nose.tools.assert_raises(ValueError, lambda: standardize.opendatasoft({'datasetid': 'one id'}, 'data.gov.uk', 'different id'))
+
+def test_ckan():
+    nonstandard = json.load(open(os.path.join('fixtures', 'housing-design-quality-2006')))
+    expected = {
+        u"uri": u"",
+        u"portal_software": u"ckan",
+        u"portal": u"data.gov.uk",
+        u"dataset_id": u"",
+
+        u"title" : u'Housing design quality in the East Midlands, West Midlands and South West from CABE 2006',
+        u"description" : u'An assessment of the design quality of 100 schemes in the East Midlands, West Midlands and South West. The assessment was carried out in 2006. Assessments were based on the Building for Life criteria. Schemes that were eligible for auditing included those that were larger than 20 units in size; completed between January 2003 and August 2006 (the date of the audit); and built by one of the top 10 housebuilders in the region, based on the number of units completed within the same period. Data on each scheme includes scheme name, location, developer, scores for individual Building for Life criteria and total scores. Six out of the 20 criteria which could not be assessed on site are incomplete, due to the poor response to a survey by developers. \r\n',
+        u"keywords": [u'building-for-life', u'design', u'housing', u'housing-quality'],
+
+        u"publishing_organization": u"",
+        u"source_url":  u"www.cabe.org.uk/publications/housing-audit-2006",
+        u"license": u'UK Open Government Licence (OGL)',
+
+        u"columns": [],
+    }
+    observed = standardize.ckan(nonstandard, u'data.gov.uk', u'housing-design-quality-2006')
+    del observed['raw_metadata']
+    nose.tools.assert_dict_equal(observed, expected)
