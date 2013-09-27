@@ -40,6 +40,27 @@ def download(portal_url, directory):
             sleep(3)
     print '**Finished downloading %s**' % portal_url
 
+def check_one(portal_url):
+    '''
+    Args:
+        portal: A string for the root of the portal (like "http://demo.ckan.org")
+    Returns:
+        A boolean indicating whether the datasets could be searched, and
+        maybe an integer indicating how many datasets
+    '''
+
+    portal = ckanapi.RemoteCKAN(portal_url)
+    try:
+        datasets = portal.action.package_list()
+    except:
+        return False, None
+    else:
+        return True, len(datasets)
+
+def check_all():
+    p = ['http://' + portal for portal in portals.ckan]
+    return dict(zip(p, map(check_one, p)))
+
 def create():
     processes = {}
 
@@ -64,7 +85,7 @@ def kill(processes):
     for process in processes.values():
         process.terminate()
 
-if __name__ == '__main__':
+def main():
     import signal
     import sys
 
@@ -79,3 +100,7 @@ if __name__ == '__main__':
 
     start(p)
     join(p)
+
+if __name__ == '__main__':
+    # main()
+    json.dumps(check_all())
