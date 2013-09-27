@@ -1,15 +1,24 @@
 #!/usr/bin/env python2
-from download_ckan import main as ckan
-from download_socrata import main as socrata
+from download_ckan import download as ckan
+# from download_socrata import download as socrata
+from download_opendatasoft import download as opendatasoft
 
 ROOT_DIR = 'portals'
 
-def create_ckan():
+def create(portal_type, func, portal_urls):
+    '''
+    Args:
+        portal_type: "ckan", "opendatasoft" or "socrata"
+        func: function to download all datasets given a portal and directory
+        portal_urls: List of portal domains
+    Returns:
+        A list of processes
+    '''
     processes = {}
 
-    for portal in portals.ckan:
-        args = ("http://" + portal, os.path.join(ROOT_DIR, 'ckan', portal))
-        processes[('ckan', portal)] = Process(target = download, args = args)
+    for portal in portal_urls:
+        args = ("http://" + portal, os.path.join(ROOT_DIR, portal_type, portal))
+        processes[(portal_type, portal)] = Process(target = func, args = args)
 
     return processes
 
@@ -32,7 +41,8 @@ def main():
     import signal
     import sys
 
-    p = create_ckan()
+    # p = create('ckan', ckan, portals.ckan)
+    p = create('opendatasoft', opendatasoft, portals.opendatasoft)
 
     def signal_handler(signal, frame):
         print 'You pressed Ctrl+C!'
@@ -44,3 +54,5 @@ def main():
     start(p)
     join(p)
 
+if __name__ == '__main__':
+    main()
