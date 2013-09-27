@@ -8,7 +8,7 @@ def socrata(d, portal, id):
         u"portal": portal,
         u"dataset_id": d['id'],
 
-        u"name" : d['name'],
+        u"title" : d['name'],
         u"description" : d['description'],
         u"keywords": d['tags'],
 
