@@ -104,7 +104,7 @@ ckan = [
     'data.sa.gov.au',
     'www.data.gc.ca',
     'data.gov.sk',
-    'data.gov.uk/data',
+    'data.gov.uk',
     'data.qld.gov.au',
     'data.openpolice.ru',
     'datacatalogs.org',
