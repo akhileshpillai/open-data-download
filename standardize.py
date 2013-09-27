@@ -41,3 +41,26 @@ def opendatasoft(d, portal, id):
         u"columns": [col['name'] for col in d['fields']],
         u"raw_metadata": d,
     }
+
+def ckan(d, portal, name):
+    if name != d['name']:
+        raise ValueError('The name argument must match the name in the json file.')
+
+    print d.keys()
+    return {
+        u"uri": u"http://%s/dataset/%s" % (portal, name),
+        u"portal_software": u"ckan",
+        u"portal": portal,
+        u"dataset_id": d['id'],
+
+        u"title" : d['title'],
+        u"description" : d['notes'],
+        u"keywords": d['tags'],
+
+        u"publishing_organization": '', #d['publisher'],
+        u"source_url":  d['url'],
+        u"license": d['license_title'],
+
+        u"columns": [col['name'] for col in d['tags']],
+        u"raw_metadata": d,
+    }

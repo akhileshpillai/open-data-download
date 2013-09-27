@@ -58,7 +58,7 @@ def test_opendatasoft_fail():
 def test_ckan():
     nonstandard = json.load(open(os.path.join('fixtures', 'housing-design-quality-2006')))
     expected = {
-        u"uri": u"",
+        u"uri": u"http://data.gov.uk/dataset/housing-design-quality-2006",
         u"portal_software": u"ckan",
         u"portal": u"data.gov.uk",
         u"dataset_id": u"",
