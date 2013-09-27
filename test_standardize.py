@@ -36,7 +36,7 @@ def test_opendatasoft():
         u"dataset_id": u"correspondances_stations_lignes_sur_le_reseau_ratp",
 
         u"title" : u"Correspondances stations/lignes sur le r\xe9seau RATP",
-        u"description" : u"<p>\n\tCe fichier permet d\u2019associer les stations et les points d\u2019arr\xeat du r\xe9seau RATP aux lignes qui desservent ces points.Nouveau: Ce fichier inclut le r\xe9seau BUS RATP et ses 12.000 points d'arr\xeats.\n</p>"
+        u"description" : u"<p>\n\tCe fichier permet d\u2019associer les stations et les points d\u2019arr\xeat du r\xe9seau RATP aux lignes qui desservent ces points.Nouveau: Ce fichier inclut le r\xe9seau BUS RATP et ses 12.000 points d'arr\xeats.\n</p>",
         u"keywords": [u'RATP', u'Transport'],
 
         u"publishing_organization": u"RATP",
