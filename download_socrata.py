@@ -1,6 +1,9 @@
 from time import sleep
 import os, json
 
+from urllib2 import urlopen
+from urllib import urlretrieve
+
 def download(portal_url, directory):
     '''
     Args:
@@ -18,3 +21,4 @@ def download(portal_url, directory):
         pass
 
     portal_url
+    html.xpath('//a[text()="This site only"]/@href')
