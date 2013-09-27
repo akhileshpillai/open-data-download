@@ -63,8 +63,13 @@ def check_one(portal_url):
         return True, len(datasets)
 
 def check_all():
-    p = ['http://' + portal for portal in portals.ckan]
-    return dict(zip(p, map(check_one, p)))
+#   p = ['http://' + portal for portal in portals.ckan]
+#   return dict(zip(p, map(check_one, p)))
+    for portal in portals.ckan:
+        for protocol in ['http://']:
+            works, count = check_one(protocol + portal)
+            works_str = 'TRUE' if works else 'FALSE'
+            print portal + ',' + works_str + ',' + ('NA' if count == None else str(count))
 
 def create():
     processes = {}
@@ -107,5 +112,5 @@ def main():
     join(p)
 
 if __name__ == '__main__':
-    # json.dumps(check_all())
-    main()
+    # main()
+    check_all()
