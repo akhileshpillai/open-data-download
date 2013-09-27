@@ -25,7 +25,12 @@ def download(portal_url, directory):
         pass
 
     portal = ckanapi.RemoteCKAN(portal_url)
-    datasets = portal.action.package_list()
+
+    try:
+        datasets = portal.action.package_list()
+    except:
+        print '**Error searching %s**' % portal_url
+        return
 
     for dataset in datasets:
         filename = os.path.join(directory, dataset)
@@ -102,5 +107,5 @@ def main():
     join(p)
 
 if __name__ == '__main__':
-    # main()
-    json.dumps(check_all())
+    # json.dumps(check_all())
+    main()
