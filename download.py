@@ -21,7 +21,7 @@ def create(portal_type, func, portal_urls):
     processes = {}
 
     for portal in portal_urls:
-        args = ("http://" + portal, os.path.join(ROOT_DIR, portal_type, portal))
+        args = ("http://" + portal, os.path.join(ROOT_DIR, portal_type))
         processes[(portal_type, portal)] = Process(target = func, args = args)
 
     return processes

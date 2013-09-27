@@ -30,7 +30,7 @@ def download(portal_url, directory):
         return
 
     for dataset in datasets:
-        filename = os.path.join(directory, dataset)
+        filename = os.path.join(directory, portal_url, dataset)
         if os.path.exists(filename):
             pass # print 'Already downloaded %s from %s' % (dataset, portal_url)
         else:
