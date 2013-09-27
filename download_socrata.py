@@ -17,7 +17,7 @@ def download(portal_url, directory):
 
     # Make sure the directory exists.
     try:
-        os.makedirs(directory)
+        os.makedirs(directory, portal_url)
     except OSError:
         pass
 
