@@ -21,7 +21,23 @@ def socrata(d, portal, id):
     }
 
 def opendatasoft(d, portal, id):
-    if id != d['dataset_id']:
+    if id != d['datasetid']:
         raise ValueError('The id argument must match the dataset_id in the json file.')
 
-    # return {
+    return {
+        u"uri": u"http://%s/explore/dataset/%s" % (portal, id),
+        u"portal_software": u"opendatasoft",
+        u"portal": portal,
+        u"dataset_id": d['datasetid'],
+
+        u"title" : d['title'],
+        u"description" : d['description'],
+        u"keywords": d['keyword'],
+
+        u"publishing_organization": d['publisher'],
+        u"source_url":  d['references'],
+        u"license": d['license'],
+
+        u"columns": [col['name'] for col in d['fields']],
+        u"raw_metadata": d,
+    }

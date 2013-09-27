@@ -33,7 +33,7 @@ def test_socrata_fail():
 def test_opendatasoft():
     nonstandard = json.load(open(os.path.join('fixtures', 'dataratp.opendatasoft.com')))['datasets'][0]
     expected = {
-        u"uri": u"https://dataratp.opendatasoft.com/explore/dataset/",
+        u"uri": u"https://dataratp.opendatasoft.com/explore/dataset/correspondances_stations_lignes_sur_le_reseau_ratp",
         u"portal_software": u"opendatasoft",
         u"portal": u"dataratp.opendatasoft.com",
         u"dataset_id": u"correspondances_stations_lignes_sur_le_reseau_ratp",
@@ -53,4 +53,4 @@ def test_opendatasoft():
     nose.tools.assert_dict_equal(observed, expected)
 
 def test_opendatasoft_fail():
-    nose.tools.assert_raises(ValueError, lambda: standardize.opendatasoft({'dataset_id': 'one id'}, 'data.gov.uk', 'different id'))
+    nose.tools.assert_raises(ValueError, lambda: standardize.opendatasoft({'datasetid': 'one id'}, 'data.gov.uk', 'different id'))
