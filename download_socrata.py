@@ -36,7 +36,8 @@ def download(portal_url, directory):
 
 def download_view(portal_url, directory, id):
     url = "http://%s/views/%s.json" % (portal_url, id)
-    urlretrieve(url, os.path.join(directory, id))
+    print '  Downloading https://%s/d/%s' % (portal_url, id)
+    urlretrieve(url, os.path.join(directory, portal_url, id))
 
 def parse_search_page(search_base, number):
     'Get 4x4s out of a search page.'
