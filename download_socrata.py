@@ -2,6 +2,8 @@
 '''
 https://github.com/jasonlally/open-data-browser/blob/dev/data/dataportalapi.py
 '''
+
+import os
 from urllib import urlretrieve
 import portals
 
@@ -19,9 +21,9 @@ def download(portal_url, directory):
     except OSError:
         pass
 
-		url = 'http://' + portal_url + '/api/search/views.json'
+    url = 'http://' + portal_url + '/api/search/views.json'
     urlretrieve(url, os.path.join(directory, portal_url))
 
 def main():
-    for portal in portals:
+    for portal in portals.socrata:
         download(portal, os.path.join('portals', 'socrata'))
