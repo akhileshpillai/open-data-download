@@ -30,13 +30,13 @@ def opendatasoft(d, portal, id):
         u"portal": portal,
         u"dataset_id": d['datasetid'],
 
-        u"title" : d['title'],
-        u"description" : d['description'],
-        u"keywords": d['keyword'],
+        u"title" : d['metas']['title'],
+        u"description" : d['metas']['description'],
+        u"keywords": d['metas']['keyword'],
 
-        u"publishing_organization": d['publisher'],
-        u"source_url":  d['references'],
-        u"license": d['license'],
+        u"publishing_organization": d['metas']['publisher'],
+        u"source_url":  d['metas']['references'],
+        u"license": d['metas']['license'],
 
         u"columns": [col['name'] for col in d['fields']],
         u"raw_metadata": d,

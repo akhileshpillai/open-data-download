@@ -33,7 +33,7 @@ def test_socrata_fail():
 def test_opendatasoft():
     nonstandard = json.load(open(os.path.join('fixtures', 'dataratp.opendatasoft.com')))['datasets'][0]
     expected = {
-        u"uri": u"https://dataratp.opendatasoft.com/explore/dataset/correspondances_stations_lignes_sur_le_reseau_ratp",
+        u"uri": u"http://dataratp.opendatasoft.com/explore/dataset/correspondances_stations_lignes_sur_le_reseau_ratp",
         u"portal_software": u"opendatasoft",
         u"portal": u"dataratp.opendatasoft.com",
         u"dataset_id": u"correspondances_stations_lignes_sur_le_reseau_ratp",
@@ -46,7 +46,7 @@ def test_opendatasoft():
         u"source_url":  u"http://data.ratp.fr/fr/les-donnees/fiche-de-jeu-de-donnees/dataset/correspondances-stationslignes-sur-le-reseau-ratp.html",
         u"license": u"ODBL - https://www.data.gouv.fr/Licence-Ouverte-Open-Licence",
 
-        u"columns": [],
+        u"columns": [u'station', u'ligne', u'type_ligne'],
     }
     observed = standardize.opendatasoft(nonstandard, u'dataratp.opendatasoft.com', u'correspondances_stations_lignes_sur_le_reseau_ratp')
     del observed['raw_metadata']
