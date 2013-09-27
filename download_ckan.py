@@ -113,5 +113,4 @@ def main():
     join(p)
 
 if __name__ == '__main__':
-    # main()
     check_all()
