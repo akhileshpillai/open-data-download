@@ -46,7 +46,7 @@ def main():
     import sys
 
     # p = create('ckan', ckan, portals.ckan)
-    p = create('opendatasoft', opendatasoft, portals.opendatasoft)
+    # p = create('opendatasoft', opendatasoft, portals.opendatasoft)
     p = create('socrata', socrata, portals.socrata)
 
     def signal_handler(signal, frame):

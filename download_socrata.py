@@ -23,8 +23,14 @@ def download(portal_url, directory):
     except OSError:
         pass
 
-    html = fromstring(urlopen(u'https://' + portal_url + u'/browse/embed?limitTo=datasets&q=&utf8=%E2%9C%93&view_type=table').read())
-    search_base = u'https://' + portal_url + html.xpath(u'//a[text()="This site only"]/@href')[0]
+    url = u'https://' + portal_url + u'/browse/embed?limitTo=datasets&q=&utf8=%E2%9C%93&view_type=table'
+    html = fromstring(urlopen(url).read())
+    search_bases = html.xpath(u'//a[text()="This site only"]/@href')
+
+    if len(search_bases) == 0:
+        search_base = url
+    else:
+        search_base = u'https://' + portal_url + search_bases[0]
 
     page = 1
     while True:
