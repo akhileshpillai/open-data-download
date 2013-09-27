@@ -20,4 +20,9 @@ p4 <- ggplot(subset(portals, connects & datasets < 10000)) +
 
 # print(p1)
 # print(p2)
-print(p4)
+# print(p4)
+
+print(subset(portals, datasets > 1000))
+
+
+# And then, what's wrong with the non-connecting portals?
