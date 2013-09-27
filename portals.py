@@ -154,4 +154,5 @@ opendatasoft = [
     'pod.opendatasoft.com',
     'dataratp.opendatasoft.com',
     'public.opendatasoft.com',
+    'parisdata.opendatasoft.com',
 ]

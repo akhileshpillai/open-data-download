@@ -21,7 +21,7 @@ def download(portal_url, directory):
     except OSError:
         pass
 
-    portal = ckanapi.RemoteCKAN(portal_url)
+    portal = ckanapi.RemoteCKAN("http://" + portal_url)
 
     try:
         datasets = portal.action.package_list()
