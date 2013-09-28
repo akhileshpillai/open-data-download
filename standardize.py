@@ -1,3 +1,5 @@
+import os, json
+
 def socrata(d, portal, id):
     if id != d['id']:
         raise ValueError('The id argument must match the id in the json file.')
