@@ -14,8 +14,8 @@ def socrata(d, portal, id):
         u"description" : d['description'],
         u"keywords": d.get('tags', []),
 
-        u"publishing_organization": d['attribution'],
-        u"source_url":  d['attributionLink'],
+        u"publishing_organization": d.get('attribution',''),
+        u"source_url":  d.get('attributionLink',''),
         u"license": d['license']['name'],
 
         u"columns": [col['name'] for col in d['columns']],
