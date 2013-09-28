@@ -64,6 +64,17 @@ def ckan(d, portal, name):
         u"raw_metadata": d,
     }
 
+def load_or_delete(filename):
+    fp = open(filename)
+    try:
+        data = json.load(fp)
+    except ValueError:
+        os.remove(filename)
+        return None
+    else:
+        fp.close()
+        return data
+
 def iter_datasets():
     import os
 
@@ -83,8 +94,10 @@ def iter_datasets():
         for portal in os.listdir(socrata_dir):
             portal_dir = os.path.join('portals', 'socrata', portal)
             for dataset in os.listdir(portal_dir):
+                raw = load_or_delete(os.path.join(portal_dir, dataset))
+                if raw == None:
+                    continue
                 try:
-                    raw = json.load(open(os.path.join(portal_dir, dataset)))
                     yield socrata(raw, portal, dataset)
                 except:
                     print 'Error at https://%s/d/%s' % (portal, dataset)
@@ -114,5 +127,4 @@ def map_reduce(mapper, reducer = None):
         return reduce(reducer, mapping())
 
 if __name__ == '__main__':
-    for dataset in iter_datasets():
-        pass
+    datasets = list(iter_datasets())
