@@ -20,12 +20,9 @@ def socrata(d, portal, id):
         u"raw_metadata": d,
     }
 
-def opendatasoft(d, portal, id):
-    if id != d['datasetid']:
-        raise ValueError('The id argument must match the dataset_id in the json file.')
-
+def opendatasoft(d, portal):
     return {
-        u"uri": u"http://%s/explore/dataset/%s" % (portal, id),
+        u"uri": u"http://%s/explore/dataset/%s" % (portal, d['datasetid']),
         u"portal_software": u"opendatasoft",
         u"portal": portal,
         u"dataset_id": d['datasetid'],
@@ -63,3 +60,21 @@ def ckan(d, portal, name):
         u"columns": [],
         u"raw_metadata": d,
     }
+
+def go():
+    for portal in os.listdir(os.path.join('portals', 'ckan')):
+        portal_dir = os.path.join('portals', 'ckan', portal)
+        for dataset in os.listdir(portal_dir):
+            raw = json.load(open(os.path.join(portal_dir, dataset)))
+            yield ckan(raw, portal, dataset)
+
+    for portal in os.listdir(os.path.join('portals', 'socrata')):
+        portal_dir = os.path.join('portals', 'socrata', portal)
+        for dataset in os.listdir(portal_dir):
+            raw = json.load(open(os.path.join(portal_dir, dataset)))
+            yield socrata(raw, portal, dataset)
+
+    for portal in os.listdir(os.path.join('portals', 'opendatasoft')):
+        data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
+        for raw in data['datasets']:
+            yield opendatasoft(raw, portal, dataset)

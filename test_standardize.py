@@ -48,12 +48,9 @@ def test_opendatasoft():
 
         u"columns": [u'station', u'ligne', u'type_ligne'],
     }
-    observed = standardize.opendatasoft(nonstandard, u'dataratp.opendatasoft.com', u'correspondances_stations_lignes_sur_le_reseau_ratp')
+    observed = standardize.opendatasoft(nonstandard, u'dataratp.opendatasoft.com')
     del observed['raw_metadata']
     nose.tools.assert_dict_equal(observed, expected)
-
-def test_opendatasoft_fail():
-    nose.tools.assert_raises(ValueError, lambda: standardize.opendatasoft({'datasetid': 'one id'}, 'data.gov.uk', 'different id'))
 
 def test_ckan():
     nonstandard = json.load(open(os.path.join('fixtures', 'housing-design-quality-2006')))
