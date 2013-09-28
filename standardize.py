@@ -2,6 +2,7 @@ import os, json
 
 def socrata(d, portal, id):
     if id != d['id']:
+        print id
         raise ValueError('The id argument must match the id in the json file.')
 
     return {
@@ -11,12 +12,12 @@ def socrata(d, portal, id):
         u"dataset_id": d['id'],
 
         u"title" : d['name'],
-        u"description" : d['description'],
+        u"description" : d.get('description'),
         u"keywords": d.get('tags', []),
 
         u"publishing_organization": d.get('attribution',''),
         u"source_url":  d.get('attributionLink',''),
-        u"license": d['license']['name'],
+        u"license": d.get('license', {'name': ''})['name'],
 
         u"columns": [col['name'] for col in d['columns']],
         u"raw_metadata": d,
@@ -30,12 +31,12 @@ def opendatasoft(d, portal):
         u"dataset_id": d['datasetid'],
 
         u"title" : d['metas']['title'],
-        u"description" : d['metas']['description'],
-        u"keywords": d['metas']['keyword'],
+        u"description" : d['metas'].get('description'),
+        u"keywords": d['metas'].get('keyword'),
 
-        u"publishing_organization": d['metas']['publisher'],
-        u"source_url":  d['metas']['references'],
-        u"license": d['metas']['license'],
+        u"publishing_organization": d['metas'].get('publisher'),
+        u"source_url":  d['metas'].get('references'),
+        u"license": d['metas'].get('license'),
 
         u"columns": [col['name'] for col in d['fields']],
         u"raw_metadata": d,
@@ -52,12 +53,12 @@ def ckan(d, portal, name):
         u"dataset_id": d['id'],
 
         u"title" : d['title'],
-        u"description" : d.get('notes', ''),
+        u"description" : d.get('notes'),
         u"keywords": [col['name'] for col in d.get('tags', [])],
 
         u"publishing_organization": '',
-        u"source_url":  d.get('url', ''),
-        u"license": d.get('license_title', ''),
+        u"source_url":  d.get('url'),
+        u"license": d.get('license_title'),
 
         u"columns": [],
         u"raw_metadata": d,
@@ -66,13 +67,16 @@ def ckan(d, portal, name):
 def iter_datasets():
     import os
 
-    ckan_dir = os.path.join('portals', 'ckan')
-    if os.path.isdir(ckan_dir):
-        for portal in os.listdir(ckan_dir):
-            portal_dir = os.path.join('portals', 'ckan', portal)
-            for dataset in os.listdir(portal_dir):
-                raw = json.load(open(os.path.join(portal_dir, dataset)))
-                yield ckan(raw, portal, dataset)
+    opendatasoft_dir = os.path.join('portals', 'opendatasoft')
+    if os.path.isdir(opendatasoft_dir):
+        for portal in os.listdir(opendatasoft_dir):
+            data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
+            for raw in data['datasets']:
+                try:
+                    yield opendatasoft(raw, portal)
+                except:
+                    print 'Error at http;//%s' % portal
+                    raise
 
     socrata_dir = os.path.join('portals', 'socrata')
     if os.path.isdir(socrata_dir):
@@ -80,14 +84,23 @@ def iter_datasets():
             portal_dir = os.path.join('portals', 'socrata', portal)
             for dataset in os.listdir(portal_dir):
                 raw = json.load(open(os.path.join(portal_dir, dataset)))
-                yield socrata(raw, portal, dataset)
+                try:
+                    yield socrata(raw, portal, dataset)
+                except:
+                    print 'Error at https://%s/d/%s' % (portal, dataset)
+                    raise
 
-    opendatasoft_dir = os.path.join('portals', 'opendatasoft')
-    if os.path.isdir(opendatasoft_dir):
-        for portal in os.listdir(opendatasoft_dir):
-            data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
-            for raw in data['datasets']:
-                yield opendatasoft(raw, portal)
+    ckan_dir = os.path.join('portals', 'ckan')
+    if os.path.isdir(ckan_dir):
+        for portal in os.listdir(ckan_dir):
+            portal_dir = os.path.join('portals', 'ckan', portal)
+            for dataset in os.listdir(portal_dir):
+                raw = json.load(open(os.path.join(portal_dir, dataset)))
+                try:
+                    yield ckan(raw, portal, dataset)
+                except:
+                    print 'Error at https://%s/data/%s' % (portal, dataset)
+                    raise
 
 def map_reduce(mapper, reducer = None):
     def mapping():
