@@ -112,3 +112,7 @@ def map_reduce(mapper, reducer = None):
         return mapping()
     else:
         return reduce(reducer, mapping())
+
+if __name__ == '__main__':
+    for dataset in iter_datasets():
+        pass
