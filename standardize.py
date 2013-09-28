@@ -90,8 +90,12 @@ def iter_datasets():
                 yield opendatasoft(raw, portal)
 
 def map_reduce(mapper, reducer = None):
-    mapping = (mapper(dataset) for dataset in iter_datasets())
+    def mapping():
+        for dataset in iter_datasets():
+            for result in mapper(dataset):
+                yield result
+
     if reducer == None:
-        return mapping
+        return mapping()
     else:
-        return reduce(reducer, mapping)
+        return reduce(reducer, mapping())
