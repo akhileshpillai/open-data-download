@@ -51,12 +51,13 @@ def download_view(portal_url, directory, id):
         try:
             r = get(url)
             if r.status_code != 200:
-                raise Exception('Something went wrong when I was accessing Socrata.')
+                raise Exception('Something went wrong when I was accessing Socrata (status code %d).' % r.status_code)
             fp = open(filename, 'w')
             fp.write(r.text)
-            f.close()
-        except:
+            fp.close()
+        except Exception, e:
             print '**Error at https://%s/d/%s' % (portal_url, id)
+            print '    ' + e.message
         else:
             print '  Downloaded https://%s/d/%s' % (portal_url, id)
         sleep(7)
@@ -69,4 +70,5 @@ def parse_search_page(search_base, number):
 
 if __name__ == '__main__':
     # download(u'data.hawaii.gov', u'portals/socrata')
-    download(u'data.nola.gov', u'portals/socrata')
+    # download(u'data.nola.gov', u'portals/socrata')
+    download(u'data.cityofnewyork.us', u'portals/socrata')
