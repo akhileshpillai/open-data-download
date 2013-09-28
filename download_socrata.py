@@ -3,7 +3,7 @@ import os, json
 
 from lxml.html import fromstring
 from urllib2 import urlopen
-from urllib import urlretrieve
+from requests import get
 
 APP_TOKEN = 'gTddlqVLsV4DkBlXnDSwnTazB'
 
@@ -49,7 +49,12 @@ def download_view(portal_url, directory, id):
         pass # print 'Already downloaded %s from %s' % (dataset, portal_url)
     else:
         try:
-            urlretrieve(url, filename)
+            r = get(url)
+            if r.status_code != 200:
+                raise Exception('Something went wrong when I was accessing Socrata.')
+            fp = open(filename, 'w')
+            fp.write(r.text)
+            f.close()
         except:
             print '**Error at https://%s/d/%s' % (portal_url, id)
         else:
