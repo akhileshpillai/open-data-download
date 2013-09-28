@@ -75,6 +75,7 @@ def load_or_delete(filename):
         fp.close()
         return data
 
+
 def iter_datasets():
     import os
 
@@ -120,7 +121,12 @@ def map_reduce(mapper, reducer = None, datasets = None):
         datasets = iter_datasets()
     def mapping():
         for dataset in datasets:
-            for result in mapper(dataset):
+            result = mapper(dataset)
+            if hasattr(result,'__iter__') and not hasattr(result,'__len__'):
+                # It's a generator
+                for subresult in result:
+                    yield result
+            else:
                 yield result
 
     if reducer == None:
@@ -128,5 +134,5 @@ def map_reduce(mapper, reducer = None, datasets = None):
     else:
         return reduce(reducer, mapping())
 
-if __name__ == '__main__':
-    datasets = list(iter_datasets())
+# if __name__ == '__main__':
+#     datasets = list(iter_datasets())
