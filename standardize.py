@@ -12,7 +12,7 @@ def socrata(d, portal, id):
 
         u"title" : d['name'],
         u"description" : d['description'],
-        u"keywords": d['tags'],
+        u"keywords": d.get('tags', []),
 
         u"publishing_organization": d['attribution'],
         u"source_url":  d['attributionLink'],
@@ -52,12 +52,12 @@ def ckan(d, portal, name):
         u"dataset_id": d['id'],
 
         u"title" : d['title'],
-        u"description" : d['notes'],
-        u"keywords": [col['name'] for col in d['tags']],
+        u"description" : d.get('notes', ''),
+        u"keywords": [col['name'] for col in d.get('tags', [])],
 
         u"publishing_organization": '',
-        u"source_url":  d['url'],
-        u"license": d['license_title'],
+        u"source_url":  d.get('url', ''),
+        u"license": d.get('license_title', ''),
 
         u"columns": [],
         u"raw_metadata": d,
