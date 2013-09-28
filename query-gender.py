@@ -50,8 +50,11 @@ def go(datasets):
     columns = list(map_reduce(lambda d: (d['uri'], d['columns']), datasets = datasets))
     gendered_datasets = filter(gendered, columns)
     g_dict = map(how_many, gendered_datasets)
-    return g_dict
-    # g_df = pandas.DataFrame(g_dict)[['uri', 'n_gendered', 'n_female']]
+    g_df = pandas.DataFrame(g_dict)
+
+    return g_df
+
+    g_df[g_df['n_male'] != g_df['n_female']]
 
     # Results
     print '%d datasets appear to have gender in the column names:' % len(gendered_datasets)
