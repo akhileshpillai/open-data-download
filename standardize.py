@@ -63,7 +63,7 @@ def ckan(d, portal, name):
         u"raw_metadata": d,
     }
 
-def go():
+def iter_datasets():
     import os
 
     ckan_dir = os.path.join('portals', 'ckan')
@@ -88,3 +88,10 @@ def go():
             data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
             for raw in data['datasets']:
                 yield opendatasoft(raw, portal)
+
+def map_reduce(mapper, reducer = None):
+    mapping = (mapper(dataset) for dataset in iter_datasets())
+    if reducer == None:
+        return mapping
+    else:
+        return reduce(reducer, mapping)
