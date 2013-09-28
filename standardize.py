@@ -62,19 +62,27 @@ def ckan(d, portal, name):
     }
 
 def go():
-    for portal in os.listdir(os.path.join('portals', 'ckan')):
-        portal_dir = os.path.join('portals', 'ckan', portal)
-        for dataset in os.listdir(portal_dir):
-            raw = json.load(open(os.path.join(portal_dir, dataset)))
-            yield ckan(raw, portal, dataset)
+    import os
 
-    for portal in os.listdir(os.path.join('portals', 'socrata')):
-        portal_dir = os.path.join('portals', 'socrata', portal)
-        for dataset in os.listdir(portal_dir):
-            raw = json.load(open(os.path.join(portal_dir, dataset)))
-            yield socrata(raw, portal, dataset)
+    ckan_dir = os.path.join('portals', 'ckan')
+    if os.path.isdir(ckan_dir):
+        for portal in os.listdir(ckan_dir):
+            portal_dir = os.path.join('portals', 'ckan', portal)
+            for dataset in os.listdir(portal_dir):
+                raw = json.load(open(os.path.join(portal_dir, dataset)))
+                yield ckan(raw, portal, dataset)
 
-    for portal in os.listdir(os.path.join('portals', 'opendatasoft')):
-        data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
-        for raw in data['datasets']:
-            yield opendatasoft(raw, portal)
+    socrata_dir = os.path.join('portals', 'socrata')
+    if os.path.isdir(socrata_dir):
+        for portal in os.listdir(socrata_dir):
+            portal_dir = os.path.join('portals', 'socrata', portal)
+            for dataset in os.listdir(portal_dir):
+                raw = json.load(open(os.path.join(portal_dir, dataset)))
+                yield socrata(raw, portal, dataset)
+
+    opendatasoft_dir = os.path.join('portals', 'opendatasoft')
+    if os.path.isdir(opendatasoft_dir):
+        for portal in os.listdir(opendatasoft_dir):
+            data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
+            for raw in data['datasets']:
+                yield opendatasoft(raw, portal)
