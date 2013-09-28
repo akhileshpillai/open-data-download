@@ -77,4 +77,4 @@ def go():
     for portal in os.listdir(os.path.join('portals', 'opendatasoft')):
         data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
         for raw in data['datasets']:
-            yield opendatasoft(raw, portal, dataset)
+            yield opendatasoft(raw, portal)
