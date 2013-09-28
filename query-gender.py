@@ -46,10 +46,11 @@ def go():
     columns = list(map_reduce(lambda d: (d['uri'], d['columns']), datasets = datasets))
     gendered_datasets = filter(gendered, columns)
 
-    g_dict = dict(zip((d[0] for d in gendered_datasets), zip(map(how_many, gendered_datasets), map(gendered_columns, (d[1] for d in gendered_datasets)))))
+    g_dict = dict(zip((d[0] for d in gendered_datasets), zip(map(how_many, gendered_datasets), map(gendered_columns, (d[1] for d in gendered_datasets)), (d[1] for d in gendered_datasets))))
     for k,v in g_dict.items():
         g_dict[k] = v[0]
         g_dict[k]['gendered_columns'] = v[1]
+        g_dict[k]['all_columns'] = v[2]
 
     g_df = pandas.DataFrame(g_dict)[['uri', 'n_gendered', 'n_female']]
 
