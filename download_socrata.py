@@ -52,13 +52,13 @@ def download_view(portal_url, directory, id):
             r = get(url)
             if r.status_code != 200:
                 raise Exception('Something went wrong when I was accessing Socrata (status code %d).' % r.status_code)
-            fp = open(filename, 'w')
-            fp.write(r.text)
-            fp.close()
         except Exception, e:
             print '**Error at https://%s/d/%s' % (portal_url, id)
             print '    ' + e.message
         else:
+            fp = open(filename, 'w')
+            fp.write(r.text)
+            fp.close()
             print '  Downloaded https://%s/d/%s' % (portal_url, id)
         sleep(7)
 
