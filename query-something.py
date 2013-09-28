@@ -3,7 +3,11 @@ import pandas
 from standardize import iter_datasets, map_reduce
 
 def standard_license(raw_license):
+    if raw_license == None:
+        return 'Not specified'
+
     r = raw_license.lower()
+
     if re.match('.*(Dom.nio P.blico|domaine public|public domain|cczero).*', r):
         return 'Public domain'
     elif re.match('.*(odbl|open database license).*', r):
@@ -53,6 +57,11 @@ for dataset in official:
 
 
 df = pandas.DataFrame(official)
-licenses = df.groupby(['license']).count()['uri']
+
+# 13550 null licenses
+pandas.isnull(df['license']).sum()
+
+df['license_standard'] = df['license'].map(standard_license)
+licenses = df.groupby(['license_standard']).count()['uri']
 # license_portals = df.groupby(['license', 'portal']).count()['uri']
 '''
