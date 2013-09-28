@@ -38,10 +38,7 @@ def how_many(pair):
         'n_female': n_female,
     }
 
-def go():
-    # load the data into memory
-    datasets = list(iter_datasets())
-
+def go(datasets):
     # Subset
     columns = list(map_reduce(lambda d: (d['uri'], d['columns']), datasets = datasets))
     gendered_datasets = filter(gendered, columns)
@@ -52,9 +49,14 @@ def go():
         g_dict[k]['gendered_columns'] = v[1]
         g_dict[k]['all_columns'] = v[2]
 
-    g_df = pandas.DataFrame(g_dict)[['uri', 'n_gendered', 'n_female']]
+    return g_dict
+    # g_df = pandas.DataFrame(g_dict)[['uri', 'n_gendered', 'n_female']]
 
     # Results
     print '%d datasets appear to have gender in the column names:' % len(gendered_datasets)
     print [d[0] for d in gendered_datasets]
     print ''
+
+# load the data into memory
+# datasets = list(iter_datasets())
+
