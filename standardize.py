@@ -115,9 +115,11 @@ def iter_datasets():
                     print 'Error at https://%s/data/%s' % (portal, dataset)
                     raise
 
-def map_reduce(mapper, reducer = None):
+def map_reduce(mapper, reducer = None, datasets = None):
+    if datasets == None:
+        datasets = iter_datasets()
     def mapping():
-        for dataset in iter_datasets():
+        for dataset in datasets:
             for result in mapper(dataset):
                 yield result
 
