@@ -18,6 +18,9 @@ def gendered(pair):
     columns_blob = ' '.join(column_names)
     return has_gender(columns_blob)
 
+def gendered_columns(column_names):
+    return filter(has_gender, column_names)
+
 # How many "male" and "female"?
 def how_many(pair):
     '''
@@ -43,7 +46,12 @@ def go():
     columns = list(map_reduce(lambda d: (d['uri'], d['columns']), datasets = datasets))
     gendered_datasets = filter(gendered, columns)
 
-    df = pandas.DataFrame(map(how_many, gendered_datasets))[['uri', 'n_gendered', 'n_female']]
+    g_dict = dict(zip((d[0] for d in gendered_datasets), zip(map(how_many, gendered_datasets), map(gendered_columns, (d[1] for d in gendered_datasets)))))
+    for k,v in g_dict.items():
+        g_dict[k] = v[0]
+        g_dict[k]['gendered_columns'] = v[1]
+
+    g_df = pandas.DataFrame(g_dict)[['uri', 'n_gendered', 'n_female']]
 
     # Results
     print '%d datasets appear to have gender in the column names:' % len(gendered_datasets)
