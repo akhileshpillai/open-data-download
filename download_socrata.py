@@ -57,7 +57,7 @@ def download_view(portal_url, directory, id):
             print '    ' + e.message
         else:
             fp = open(filename, 'w')
-            fp.write(r.text)
+            fp.write(r.text.encode('utf-8'))
             fp.close()
             print '  Downloaded https://%s/d/%s' % (portal_url, id)
         sleep(7)
