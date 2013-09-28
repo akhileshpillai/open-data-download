@@ -83,8 +83,8 @@ def iter_datasets():
         for portal in os.listdir(socrata_dir):
             portal_dir = os.path.join('portals', 'socrata', portal)
             for dataset in os.listdir(portal_dir):
-                raw = json.load(open(os.path.join(portal_dir, dataset)))
                 try:
+                    raw = json.load(open(os.path.join(portal_dir, dataset)))
                     yield socrata(raw, portal, dataset)
                 except:
                     print 'Error at https://%s/d/%s' % (portal, dataset)
@@ -95,8 +95,8 @@ def iter_datasets():
         for portal in os.listdir(ckan_dir):
             portal_dir = os.path.join('portals', 'ckan', portal)
             for dataset in os.listdir(portal_dir):
-                raw = json.load(open(os.path.join(portal_dir, dataset)))
                 try:
+                    raw = json.load(open(os.path.join(portal_dir, dataset)))
                     yield ckan(raw, portal, dataset)
                 except:
                     print 'Error at https://%s/data/%s' % (portal, dataset)
