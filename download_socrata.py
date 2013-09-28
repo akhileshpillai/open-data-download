@@ -59,6 +59,7 @@ def download_view(portal_url, directory, id):
             print '**Error at https://%s/d/%s' % (portal_url, id)
         else:
             print '  Downloaded https://%s/d/%s' % (portal_url, id)
+        sleep(7)
 
 def parse_search_page(search_base, number):
     'Get 4x4s out of a search page.'
