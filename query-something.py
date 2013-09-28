@@ -34,7 +34,7 @@ def creative_commons(r):
     if re.match(r'.*(share.?alike|sa).*', r):
         share_alike = '-SA'
 
-    if re.match(r'.*(non.?commerical|nc).*', r):
+    if re.match(r'.*(non.?commericial|nc).*', r):
         non_commercial = '-NC'
 
     if re.match(r'.*(derivative|nd).*', r):
@@ -43,10 +43,7 @@ def creative_commons(r):
     if 'universal' in r:
         return 'Public domain'
     else:
-        a = 'CC' + attribution + share_alike + no_derivative + non_commercial
-        if a == 'CC':
-            print r
-        return a
+        return 'CC' + attribution + share_alike + no_derivative + non_commercial
 
 '''
 # datasets = list(iter_datasets())
