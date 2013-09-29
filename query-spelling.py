@@ -50,7 +50,7 @@ def reducer(a, b):
 def query(datasets):
     open_portals = {'datahub.io', 'opendata.socrata.com', 'datastore.opendatasoft.com'}
     official = [dataset for dataset in datasets if dataset['portal'] not in open_portals]
-    mr = map_reduce(mapper, datasets = datasets)
+    mr = map_reduce(mapper, datasets = official)
     rows = []
     for item in mr:
         rows += list(item)
