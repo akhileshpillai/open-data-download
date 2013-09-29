@@ -8,6 +8,7 @@ from standardize import iter_datasets, map_reduce
 
 not_english = {
     'parisdata.opendatasoft.com': 'fr_FR',
+    'dati.lombardia.it': 'it_IT',
 }
 
 def mapper(dataset):
@@ -36,7 +37,7 @@ def mapper(dataset):
 
         for pair in t(text):
             if not d.check(pair[0]):
-                yield (dataset['uri'], column, pair[0])
+                yield (dataset['portal'], dataset['uri'], column, pair[0])
 
 def reducer(a, b):
     '''
@@ -47,8 +48,10 @@ def reducer(a, b):
 
 # datasets = list(iter_datasets())
 def query(datasets):
+    open_portals = {'datahub.io', 'opendata.socrata.com', 'datastore.opendatasoft.com'}
+    official = [dataset for dataset in datasets if dataset['portal'] not in open_portals]
     mr = map_reduce(mapper, datasets = datasets)
     rows = []
     for item in mr:
         rows += list(item)
-    return pandas.DataFrame(rows, columns = ['uri', 'column', 'word'])
+    return pandas.DataFrame(rows, columns = ['portal', 'uri', 'column', 'word'])
