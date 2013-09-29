@@ -76,12 +76,14 @@ def load_or_delete(filename):
         return data
 
 
-def iter_datasets():
+def iter_datasets(skip = {'datahub.io', 'opendata.socrata.com', 'datastore.opendatasoft.com'}):
     import os
 
     opendatasoft_dir = os.path.join('portals', 'opendatasoft')
     if os.path.isdir(opendatasoft_dir):
         for portal in os.listdir(opendatasoft_dir):
+            if portal in skip:
+                continue
             data = json.load(open(os.path.join('portals', 'opendatasoft', portal)))
             for raw in data['datasets']:
                 try:
@@ -93,6 +95,8 @@ def iter_datasets():
     socrata_dir = os.path.join('portals', 'socrata')
     if os.path.isdir(socrata_dir):
         for portal in os.listdir(socrata_dir):
+            if portal in skip:
+                continue
             portal_dir = os.path.join('portals', 'socrata', portal)
             for dataset in os.listdir(portal_dir):
                 raw = load_or_delete(os.path.join(portal_dir, dataset))
@@ -110,6 +114,8 @@ def iter_datasets():
     ckan_dir = os.path.join('portals', 'ckan')
     if os.path.isdir(ckan_dir):
         for portal in os.listdir(ckan_dir):
+            if portal in skip:
+                continue
             portal_dir = os.path.join('portals', 'ckan', portal)
             for dataset in os.listdir(portal_dir):
                 try:
