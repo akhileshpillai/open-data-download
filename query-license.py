@@ -78,3 +78,5 @@ def licensing_by_portal(datasets):
         {'no_license':pandas.isnull(df['license']).sum() + (df['license'] == '').sum(), 'all':df.shape[0]}))
     licensed['prop'] = 1 - float(licensed['no_license']) / float(licensed['all'])
     return licensed
+
+# l[['uri','portal_software','portal','license']].to_csv('licensing.csv')
