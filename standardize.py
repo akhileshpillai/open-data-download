@@ -130,9 +130,10 @@ def map_reduce(mapper, reducer = None, datasets = None):
                 yield result
 
     if reducer == None:
-        return mapping()
+        for result in mapping():
+            yield result
     else:
-        return reduce(reducer, mapping())
+        yield reduce(reducer, mapping())
 
 # if __name__ == '__main__':
 #     datasets = list(iter_datasets())

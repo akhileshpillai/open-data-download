@@ -6,7 +6,6 @@ import enchant, enchant.tokenize
 
 from standardize import iter_datasets, map_reduce
 
-# datasets = list(iter_datasets())
 not_english = {
     'parisdata.opendatasoft.com': 'fr_FR',
 }
@@ -40,3 +39,7 @@ def reducer(a, b):
         a: A dict of uri -> number of misspellings
         b: a tuple of (uri, column name, misspelling)
     '''
+
+datasets = list(iter_datasets())
+mr = map_reduce(mapper, datasets = datasets)
+# misspellings = pandas.DataFrame(mr, columns = ['uri', 'column', 'word'])
