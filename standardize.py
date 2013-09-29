@@ -98,6 +98,9 @@ def iter_datasets():
                 raw = load_or_delete(os.path.join(portal_dir, dataset))
                 if raw == None:
                     continue
+                elif 'error' in raw:
+                    os.remove(os.path.join(portal_dir, dataset))
+                    continue
                 try:
                     yield socrata(raw, portal, dataset)
                 except:
@@ -130,10 +133,9 @@ def map_reduce(mapper, reducer = None, datasets = None):
                 yield result
 
     if reducer == None:
-        for result in mapping():
-            yield result
+        return mapping()
     else:
-        yield reduce(reducer, mapping())
+        return reduce(reducer, mapping())
 
 # if __name__ == '__main__':
 #     datasets = list(iter_datasets())

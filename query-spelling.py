@@ -24,11 +24,16 @@ def mapper(dataset):
 
     for column in ['title', 'description']:
         text = dataset[column]
+
+        if text == None:
+            continue
+
         if column == 'description':
             try:
                 text = lxml.html.fromstring(text).text_content()
             except:
                 pass
+
         for pair in t(text):
             if not d.check(pair[0]):
                 yield (dataset['uri'], column, pair[0])
@@ -40,6 +45,10 @@ def reducer(a, b):
         b: a tuple of (uri, column name, misspelling)
     '''
 
-datasets = list(iter_datasets())
-mr = map_reduce(mapper, datasets = datasets)
-# misspellings = pandas.DataFrame(mr, columns = ['uri', 'column', 'word'])
+# datasets = list(iter_datasets())
+def query(datasets):
+    mr = map_reduce(mapper, datasets = datasets)
+    rows = []
+    for item in mr:
+        rows += list(item)
+    return pandas.DataFrame(rows, columns = ['uri', 'column', 'word'])
