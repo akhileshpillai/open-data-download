@@ -75,6 +75,6 @@ def licensing(datasets):
 def licensing_by_portal(datasets):
     df = licensing(datasets)
     licensed = df.groupby(['portal']).apply( lambda df:pandas.Series(
-        {'no_license':pandas.isnull(df['license']).sum(), 'all':df.shape[0]}))
-    licensed['prop'] = licensed['no_license'] / licensed['all']
+        {'no_license':pandas.isnull(df['license']).sum() + (pandas['license'] == '').sum(), 'all':df.shape[0]}))
+    licensed['prop'] = 1 - float(licensed['no_license']) / float(licensed['all'])
     return licensed
