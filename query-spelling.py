@@ -6,10 +6,10 @@ import enchant, enchant.tokenize
 from standardize import iter_datasets, map_reduce
 
 # datasets = list(iter_datasets())
-# columns = list(map_reduce(lambda d: (d['uri'], d['columns']), datasets = datasets))
+not_english = {
+    'parisdata.opendatasoft.com': 'fr_FR',
+}
 
-d = enchant.Dict('en_US')
-t = enchant.tokenize.get_tokenizer('en_US')
 def mapper(dataset):
     '''
     Args:
@@ -18,6 +18,10 @@ def mapper(dataset):
         An iterator yielding a tuple of (uri, column name, word) for
         each missspelled word in the name or description columns
     '''
+    language = not_english[dataset['portal']] if dataset['portal'] in not_english else 'en_US'
+    d = enchant.Dict(language)
+    t = enchant.tokenize.get_tokenizer(language)
+
     for column in ['title', 'description']:
         for pair in t(dataset[column]):
             if not d.check(pair[0]):
