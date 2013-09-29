@@ -50,7 +50,10 @@ def download_view(portal_url, directory, id):
     else:
         try:
             r = get(url)
-            if r.status_code != 200:
+            if r.status_code == 429:
+                print 'Waiting an hour because I hit an API limit'
+                sleep(3600)
+            elif r.status_code != 200:
                 raise Exception('Something went wrong when I was accessing Socrata (status code %d).' % r.status_code)
         except Exception, e:
             print '**Error at https://%s/d/%s' % (portal_url, id)
