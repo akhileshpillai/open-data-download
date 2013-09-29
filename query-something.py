@@ -65,3 +65,6 @@ df['license_standard'] = df['license'].map(standard_license)
 licenses = df.groupby(['license_standard']).count()['uri']
 # license_portals = df.groupby(['license', 'portal']).count()['uri']
 '''
+
+licensed = df.groupby(['portal']).apply( lambda df:pandas.Series(
+    {'no_license':pandas.isnull(df['license']).sum(), 'all':df.shape[0]}))
