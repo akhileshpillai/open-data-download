@@ -11,14 +11,21 @@ p1 <- ggplot(lb) + aes(x = prop) + geom_histogram() +
   scale_y_continuous('Number of portals with this proportion') +
   ggtitle('Which portals indicate the licenses of their datasets?')
 
-p2 <- ggplot(l) + aes(x = license_standard) + geom_bar()
+p2 <- ggplot(l) + aes(x = license_standard) + geom_bar() + coord_flip() +
+  scale_x_discrete('Dataset license') +
+  scale_y_continuous('Number of datasets') +
+  ggtitle('Data license in use across 100 portals')
 
 p3 <- ggplot(subset(l, portal == 'data.sfgov.org' | portal == 'data.cityofnewyork.us' | portal == 'data.cityofchicago.us' | portal == 'data.gov.uk' | portal == 'explore.data.gov' | portal == 'data.cityofsantacruz.com' | portal == 'parisdata.opendatasoft.com' | portal == 'data.oaklandnet.com')) +
-  facet_wrap(~ portal) + aes(x = license_standard, fill = portal_software) + geom_bar() +
-  coord_flip()
+  facet_wrap(~ portal) + aes(x = license_standard) +  geom_bar() +
+  # aes(fill = portal_software) +
+  coord_flip() +
+  scale_x_discrete('Dataset license') +
+  scale_y_continuous('Number of datasets') +
+  ggtitle('Licenses in use in a few portals')
 
 p <- function(.p, fn) {
-  png(fn, width = 840, height = 840)
+  png(fn, width = 840, height = 840, res = 150)
   print(.p)
   dev.off()
 }
