@@ -50,7 +50,6 @@ def main():
     p = create('socrata', socrata, portals.socrata)
 
     def signal_handler(signal, frame):
-        print 'You pressed Ctrl+C!'
         kill(p)
         sys.exit(0)
 
