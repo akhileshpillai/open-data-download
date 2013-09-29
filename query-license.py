@@ -70,7 +70,10 @@ licenses = df.groupby(['license_standard']).count()['uri']
 def licensing(datasets):
     open_portals = {'datahub.io', 'opendata.socrata.com', 'datastore.opendatasoft.com'}
     official = [dataset for dataset in datasets if dataset['portal'] not in open_portals]
-    df = pandas.DataFrame(official)
+    return pandas.DataFrame(official)
+
+def licensing_by_portal(datasets):
+    df = licensing(datasets)
     licensed = df.groupby(['portal']).apply( lambda df:pandas.Series(
         {'no_license':pandas.isnull(df['license']).sum(), 'all':df.shape[0]}))
     licensed['prop'] = licensed['no_license'] / licensed['all']

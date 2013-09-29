@@ -1,6 +1,6 @@
 library(ggplot2)
 
-l <- read.csv('licensing.csv')
+l <- read.csv('licensing-by-portal.csv')
 l$prop <- l$no_license / l$all
 
 
