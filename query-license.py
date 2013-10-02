@@ -3,8 +3,8 @@ import pandas
 from standardize import iter_datasets, map_reduce
 
 def standard_license(raw_license):
-    if raw_license == None:
-        return 'Not specified'
+    if not raw_license:
+        return 'No license'
 
     r = raw_license.lower()
 
@@ -12,8 +12,16 @@ def standard_license(raw_license):
         return 'Public domain'
     elif re.match('.*(odbl|open database license).*', r):
         return 'ODbL'
+    elif 'dl-de-by-1.0' == r:
+        return 'dl-de-by-1.0'
+    elif 'dl-de-by-nc-1.0' == r:
+        return 'dl-de-by-1.0'
+    elif u'Nie je uveden\xe1 licencia' == r:
+        return 'No license'
+    elif u"La licence n'est pas fournie" == r:
+        return 'No license'
     elif re.match(r'.*(especificada|sp.cifi.e|specified).*$', r):
-        return 'Not specified'
+        return 'No license'
     elif re.match(r'^(cc|creative commons)(.*)', r):
         return creative_commons(re.match(r'^(cc|creative commons)(.*)', r).group(2))
     elif re.match(r'^.*(open data).*', r):
@@ -79,4 +87,13 @@ def licensing_by_portal(datasets):
     licensed['prop'] = 1 - float(licensed['no_license']) / float(licensed['all'])
     return licensed
 
-# l[['uri','portal_software','portal','license']].to_csv('licensing.csv')
+'''
+datasets = list(iter_datasets())
+l = licensing(datasets)
+l['license_standard'] = l['license'].map(standard_license)
+a = l[l['license_standard'] == 'Other']['license']
+
+print len(a)
+print random.sample(a, 40)
+'''
+# l[['uri','portal_software','portal','license_standard']].to_csv('licensing.csv')
