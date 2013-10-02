@@ -4,6 +4,14 @@ if (!('l' %in% ls())) {
   lb <- read.csv('licensing-by-portal.csv')
   lb$prop <- 1 - (lb$no_license / lb$all)
   l <- read.csv('licensing.csv')
+
+  l$license.reduced <- l$license_standard
+  l$license.reduced[grepl('^CC', l$license_standard)] <- 'Other'
+  l$license.reduced[l$license_standard == 'CC-BY-SA'] <- 'CC-BY-SA'
+  # l$license.reduced[l$license_standard == 'ODbL'] <- 'Other open license'
+  l$license.reduced[l$license_standard == 'GFDL'] <- 'Other open license'
+  l$license.reduced[l$license_standard == 'Other open data license'] <- 'Other open license'
+  l$license.reduced <- factor(l$license.reduced)
 }
 
 p1 <- ggplot(lb) + aes(x = prop) + geom_histogram() +
