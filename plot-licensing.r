@@ -12,7 +12,7 @@ if (!('l' %in% ls())) {
   l$license.reduced[l$license_standard == 'GFDL'] <- 'Other open license'
   l$license.reduced[l$license_standard == 'Other open data license'] <- 'Other open license'
   l$license.reduced <- factor(l$license.reduced,
-    levels = c("Public domain","CC-BY-SA","ODbL","Other open license","dl-de-by-1.0","A UK Government license","Other","No license"))
+    levels = rev(c("Public domain","CC-BY-SA","ODbL","Other open license","dl-de-by-1.0","A UK Government license","Other","No license")))
 }
 
 p1 <- ggplot(lb) + aes(x = prop) + geom_histogram() +
