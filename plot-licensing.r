@@ -1,4 +1,5 @@
 library(ggplot2)
+library(plyr)
 
 if (!('l' %in% ls())) {
   lb <- read.csv('licensing-by-portal.csv')
@@ -13,10 +14,14 @@ if (!('l' %in% ls())) {
   l$license.reduced[l$license_standard == 'Other open data license'] <- 'Other open license'
   l$license.reduced <- factor(l$license.reduced,
     levels = rev(c("Public domain","CC-BY-SA","ODbL","Other open license","dl-de-by-1.0","A UK Government license","Other","No license")))
+
+  l.by.portal <- ddply(l, 'portal', function(df) {
+    c(prop = sum(df$license.reduced == 'No license'))
+  })
 }
 
-p1 <- ggplot(lb) + aes(x = prop) + geom_histogram() +
-  scale_x_continuous('Proportion of datasets with a the license field filled in') +
+p1 <- ggplot(l.by.portal) + aes(x = prop) + geom_histogram() +
+  scale_x_continuous('Proportion of datasets with a license') +
   scale_y_continuous('Number of portals with this proportion') +
   ggtitle('Which portals indicate the licenses of their datasets?')
 
