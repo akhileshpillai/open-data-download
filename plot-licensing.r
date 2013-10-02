@@ -60,7 +60,7 @@ p <- function(.p, fn) {
 main <- function() {
   p(p1, 'p1.png')
   p(p2, 'p2.png')
-  p(p3, 'p3.png')
+# p(p3, 'p3.png')
 }
 
 png('p4.png',  width = 2 * 840, height = 2 * 840, res = 100)
