@@ -16,9 +16,9 @@ def standard_license(raw_license):
         return 'dl-de-by-1.0'
     elif 'dl-de-by-nc-1.0' == r:
         return 'dl-de-by-1.0'
-    elif u'Nie je uveden\xe1 licencia' == r:
+    elif u'Nie je uveden\xe1 licencia'.lower() == r:
         return 'No license'
-    elif u"La licence n'est pas fournie" == r:
+    elif u"La licence n'est pas fournie".lower() == r:
         return 'No license'
     elif re.match(r'.*(especificada|sp.cifi.e|specified).*$', r):
         return 'No license'
@@ -26,7 +26,7 @@ def standard_license(raw_license):
         return creative_commons(re.match(r'^(cc|creative commons)(.*)', r).group(2))
     elif re.match(r'^.*(open data).*', r):
         return 'Other open data license'
-    elif r == u'GNU Free Documentation License':
+    elif r == u'GNU Free Documentation License'.lower():
         return 'GFDL'
     elif re.match(r'^.*(open|oiuverte|libre|ouverte|aberta|abierta).*', r):
         return 'Other open license'
