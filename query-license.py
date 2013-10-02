@@ -20,6 +20,8 @@ def standard_license(raw_license):
         return 'No license'
     elif u"La licence n'est pas fournie".lower() == r:
         return 'No license'
+    elif r in {'ukcrown','ukcrown-withrights','localauth','localauth-withrights'}:
+        return 'A UK Government license'
     elif re.match(r'.*(especificada|sp.cifi.e|specified).*$', r):
         return 'No license'
     elif re.match(r'^(cc|creative commons)(.*)', r):
@@ -89,6 +91,7 @@ def licensing_by_portal(datasets):
 
 '''
 datasets = list(iter_datasets())
+
 l = licensing(datasets)
 l['license_standard'] = l['license'].map(standard_license)
 a = l[l['license_standard'] == 'Other']['license']
